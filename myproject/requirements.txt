@@ -1,4 +1,13 @@
+# ==========================================
 # MyProject - Python Dependencies
-# Django Web Application
+# ==========================================
 
+# Web Framework
 Django
+
+# Database
+# SQLite is included with Python/Django
+
+# Frontend
+# HTML5, CSS3, JavaScript, Bootstrap
+# are managed through the project templates/static files
