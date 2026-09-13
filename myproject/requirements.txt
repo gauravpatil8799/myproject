@@ -1,0 +1,4 @@
+# MyProject - Python Dependencies
+# Django Web Application
+
+Django
