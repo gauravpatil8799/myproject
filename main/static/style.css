@@ -1,0 +1,2010 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    padding: 40px 20px;
+    color: #222;
+}
+
+.container {
+    width: 100%;
+    max-width: 1100px;
+    margin: auto;
+    background: rgba(255, 255, 255, 0.97);
+    padding: 45px;
+    border-radius: 25px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+}
+
+
+/* ================= HEADER ================= */
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.welcome h1 {
+    font-size: 42px;
+    margin-bottom: 8px;
+}
+
+.welcome h2 {
+    color: #555;
+}
+
+
+/* ================= PROFILE ================= */
+
+.profile-section {
+    text-align: center;
+}
+
+.profile-form {
+    margin: 0;
+}
+
+.profile-photo {
+    width: 95px;
+    height: 95px;
+    border-radius: 50%;
+    background: #667eea;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    overflow: hidden;
+    border: 4px solid white;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.25);
+    transition: all 0.3s ease;
+}
+
+.profile-photo:hover {
+    transform: scale(1.08);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.profile-photo span {
+    font-size: 32px;
+}
+
+.profile-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.profile-section p {
+    margin-top: 8px;
+    font-size: 13px;
+    color: #777;
+}
+
+
+/* ================= ADD TASK ================= */
+
+.add-task-form {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 35px;
+}
+
+.add-task-form input {
+    flex: 1;
+    padding: 17px 20px;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    font-size: 16px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.add-task-form input:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15);
+}
+
+
+/* ================= DUE DATE INPUT ================= */
+
+.add-task-form input[type="date"] {
+    flex: 0 0 190px;
+    cursor: pointer;
+    color: #555;
+    background: white;
+}
+
+.add-task-form input[type="date"]:hover {
+    border-color: #667eea;
+}
+
+.add-task-form input[type="date"]:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15);
+}
+
+
+/* ================= ADD BUTTON ================= */
+
+.add-task-form button {
+    background: #667eea;
+    color: white;
+    border: none;
+    padding: 14px 22px;
+    border-radius: 11px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.add-task-form button:hover {
+    background: #5568d9;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(102, 126, 234, 0.3);
+}
+
+
+/* ================= TASK TITLE ================= */
+
+.tasks-title {
+    color: #555;
+    margin-bottom: 20px;
+}
+
+
+/* ================= TASK LIST ================= */
+
+ul {
+    list-style: none;
+}
+
+
+/* ================= TASK ROW ================= */
+
+li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+
+    margin-bottom: 14px;
+    padding: 18px 20px;
+
+    background: #f7f7fb;
+    border: 1px solid #e5e5ee;
+    border-radius: 14px;
+
+    font-size: 18px;
+
+    transition: all 0.25s ease;
+}
+
+li:hover {
+    transform: translateY(-2px);
+    background: #ffffff;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+
+/* ================= TASK INFO ================= */
+
+.task-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+    min-width: 0;
+}
+
+
+/* ================= TASK NAME ================= */
+
+.task-name {
+    min-width: 0;
+    word-break: break-word;
+}
+
+
+/* ================= DUE DATE ================= */
+
+.due-date {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+
+    padding: 5px 10px;
+
+    background: #eef0ff;
+    color: #667eea;
+
+    border-radius: 8px;
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+
+/* ================= TASK BUTTONS ================= */
+
+.task-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.task-actions a {
+    text-decoration: none;
+}
+
+.task-actions button {
+    border: none;
+    color: white;
+    padding: 10px 14px;
+    border-radius: 9px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.25s ease;
+}
+
+
+/* ================= COMPLETE ================= */
+
+.complete-btn {
+    background: #20a464;
+}
+
+.complete-btn:hover {
+    background: #17894f;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 12px rgba(32, 164, 100, 0.25);
+}
+
+
+/* ================= DELETE ================= */
+
+.delete-btn {
+    background: #e74c3c;
+}
+
+.delete-btn:hover {
+    background: #c0392b;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 12px rgba(231, 76, 60, 0.25);
+}
+
+
+/* ================= EDIT ================= */
+
+.edit-btn {
+    background: #f39c12;
+}
+
+.edit-btn:hover {
+    background: #d68910;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 12px rgba(243, 156, 18, 0.25);
+}
+
+
+/* ================= EMPTY ================= */
+
+.empty-task {
+    justify-content: center;
+    color: #777;
+}
+
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 700px) {
+
+    body {
+        padding: 15px 10px;
+    }
+
+    .container {
+        padding: 25px 18px;
+        border-radius: 18px;
+    }
+
+    .header {
+        align-items: flex-start;
+    }
+
+    .welcome h1 {
+        font-size: 30px;
+    }
+
+    .welcome h2 {
+        font-size: 20px;
+    }
+
+    .profile-photo {
+        width: 75px;
+        height: 75px;
+    }
+
+    .add-task-form {
+        flex-direction: column;
+    }
+
+    .add-task-form input,
+    .add-task-form input[type="date"],
+    .add-task-form button {
+        width: 100%;
+        flex: none;
+    }
+
+    li {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .task-info {
+        width: 100%;
+    }
+
+    .task-actions {
+        width: 100%;
+        justify-content: flex-end;
+        flex-wrap: wrap;
+    }
+}
+/* ================= EDIT PAGE ================= */
+
+.edit-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 20px;
+}
+
+
+/* ================= EDIT CARD ================= */
+
+.edit-card {
+    width: 100%;
+    max-width: 600px;
+    background: rgba(255, 255, 255, 0.98);
+    padding: 40px;
+    border-radius: 25px;
+
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.25);
+
+    animation: editCardAppear 0.5s ease;
+}
+
+
+@keyframes editCardAppear {
+
+    from {
+        opacity: 0;
+        transform: translateY(25px) scale(0.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+
+}
+
+
+/* ================= EDIT HEADER ================= */
+
+.edit-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+
+.edit-icon {
+    width: 70px;
+    height: 70px;
+
+    margin: 0 auto 15px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #eef0ff;
+
+    border-radius: 50%;
+
+    font-size: 32px;
+
+    transition: all 0.3s ease;
+}
+
+
+.edit-icon:hover {
+    transform: rotate(-10deg) scale(1.1);
+}
+
+
+.edit-header h1 {
+    font-size: 32px;
+    margin-bottom: 8px;
+}
+
+
+.edit-header p {
+    color: #777;
+    font-size: 15px;
+}
+
+
+/* ================= FORM ================= */
+
+.edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+
+.form-group label {
+    font-size: 15px;
+    font-weight: bold;
+    color: #444;
+}
+
+
+.form-group input {
+    width: 100%;
+
+    padding: 16px 18px;
+
+    border: 2px solid #ddd;
+
+    border-radius: 12px;
+
+    font-size: 16px;
+
+    outline: none;
+
+    background: #fff;
+
+    transition: all 0.3s ease;
+}
+
+
+.form-group input:hover {
+    border-color: #aaa;
+}
+
+
+.form-group input:focus {
+    border-color: #667eea;
+
+    box-shadow:
+        0 0 0 4px rgba(102, 126, 234, 0.15);
+
+    transform: translateY(-1px);
+}
+
+
+.form-group input[type="date"] {
+    cursor: pointer;
+}
+
+
+.form-group small {
+    color: #888;
+    font-size: 12px;
+}
+
+
+/* ================= EDIT BUTTONS ================= */
+
+.edit-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 5px;
+}
+
+
+.save-btn,
+.cancel-btn {
+    flex: 1;
+
+    padding: 14px 18px;
+
+    border-radius: 11px;
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    text-align: center;
+
+    text-decoration: none;
+
+    transition: all 0.25s ease;
+}
+
+
+/* SAVE */
+
+.save-btn {
+    border: none;
+
+    background: #20a464;
+
+    color: white;
+}
+
+
+.save-btn:hover {
+    background: #17894f;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 7px 18px rgba(32, 164, 100, 0.3);
+}
+
+
+/* CANCEL */
+
+.cancel-btn {
+    background: #f1f1f5;
+
+    color: #555;
+
+    border: 2px solid #ddd;
+}
+
+
+.cancel-btn:hover {
+    background: #e5e5eb;
+
+    transform: translateY(-2px);
+}
+
+
+/* ================= TASK PREVIEW ================= */
+
+.task-preview {
+    margin-top: 30px;
+
+    padding: 18px;
+
+    background: #f7f7fb;
+
+    border: 1px solid #e5e5ee;
+
+    border-radius: 14px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 6px;
+}
+
+
+.task-preview span {
+    font-size: 12px;
+
+    color: #888;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.5px;
+}
+
+
+.task-preview strong {
+    font-size: 18px;
+
+    color: #333;
+
+    word-break: break-word;
+}
+
+
+.task-preview small {
+    color: #667eea;
+
+    font-weight: 600;
+}
+
+
+/* ================= EDIT MOBILE ================= */
+
+@media (max-width: 600px) {
+
+    .edit-page {
+        padding: 20px 12px;
+    }
+
+    .edit-card {
+        padding: 28px 20px;
+        border-radius: 20px;
+    }
+
+    .edit-header h1 {
+        font-size: 27px;
+    }
+
+    .edit-actions {
+        flex-direction: column;
+    }
+
+    .save-btn,
+    .cancel-btn {
+        width: 100%;
+    }
+
+}
+/* ================= DATE ACTION ================= */
+
+.date-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: -2px;
+}
+
+.date-actions button {
+    border: none;
+    background: transparent;
+    color: #e74c3c;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 4px 0;
+    transition: 0.2s ease;
+}
+
+.date-actions button:hover {
+    color: #c0392b;
+    transform: translateX(-2px);
+}
+/* ================= EDIT PAGE ================= */
+
+/* ================= EDIT PAGE ================= */
+
+.edit-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 20px;
+}
+
+.edit-card {
+    width: 100%;
+    max-width: 550px;
+    background: white;
+    padding: 35px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Header */
+
+.edit-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.edit-icon {
+    font-size: 35px;
+    margin-bottom: 10px;
+}
+
+.edit-header h1 {
+    font-size: 30px;
+    margin-bottom: 8px;
+}
+
+.edit-header p {
+    color: #777;
+    font-size: 14px;
+}
+
+/* Form */
+
+.edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 14px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    font-size: 16px;
+    outline: none;
+}
+
+.form-group input:focus {
+    border-color: #667eea;
+}
+
+/* Clear Date */
+
+.date-actions {
+    text-align: right;
+}
+
+.date-actions button {
+    border: none;
+    background: none;
+    color: #e74c3c;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+/* Buttons */
+
+.edit-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.save-btn,
+.cancel-btn {
+    flex: 1;
+    padding: 13px;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.save-btn {
+    border: none;
+    background: #20a464;
+    color: white;
+}
+
+.cancel-btn {
+    background: #eee;
+    color: #555;
+    border: 1px solid #ddd;
+}
+
+/* Preview */
+
+.task-preview {
+    margin-top: 25px;
+    padding: 15px;
+    background: #f7f7fb;
+    border: 1px solid #e5e5ee;
+    border-radius: 10px;
+}
+
+.task-preview span {
+    display: block;
+    color: #777;
+    font-size: 12px;
+    margin-bottom: 7px;
+}
+
+.task-preview strong {
+    display: block;
+    font-size: 17px;
+    margin-bottom: 5px;
+}
+
+.task-preview small {
+    color: #667eea;
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+    .edit-card {
+        padding: 25px 20px;
+    }
+
+    .edit-actions {
+        flex-direction: column;
+    }
+
+}
+/* ================= TASK STATISTICS ================= */
+
+.stats-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin: 30px 0;
+}
+
+.stat-card {
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 22px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.stat-icon {
+    width: 55px;
+    height: 55px;
+    border-radius: 14px;
+    background: #f1f3ff;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 26px;
+    flex-shrink: 0;
+}
+
+.stat-card span {
+    display: block;
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 5px;
+}
+
+.stat-card strong {
+    display: block;
+    font-size: 28px;
+    color: #222;
+    font-weight: 700;
+}
+
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 700px) {
+
+    .stats-container {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .stat-card {
+        padding: 18px;
+    }
+
+}
+/* ================= COMPLETED TASK ================= */
+
+.completed-task-title {
+    color: #777;
+    font-weight: 500;
+}
+
+.completed-task-title::after {
+    content: " ✓ Completed";
+    display: inline-block;
+    margin-left: 12px;
+    padding: 5px 10px;
+    border-radius: 20px;
+    background: #e8f8ef;
+    color: #19a463;
+    font-size: 12px;
+    font-weight: 600;
+}
+/* ================= SEARCH & FILTER ================= */
+
+.task-controls {
+    display: flex;
+    gap: 15px;
+    margin: 25px 0;
+}
+
+.task-controls input {
+    flex: 1;
+    padding: 15px 18px;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    font-size: 15px;
+    outline: none;
+}
+
+.task-controls input:focus {
+    border-color: #667eea;
+}
+
+.task-controls select {
+    width: 200px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    background: white;
+    font-size: 15px;
+    cursor: pointer;
+    outline: none;
+}
+
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 700px) {
+
+    .task-controls {
+        flex-direction: column;
+    }
+
+    .task-controls select {
+        width: 100%;
+    }
+
+}
+/* =====================================================
+   GLOBAL TEXT STYLE
+   ===================================================== */
+
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    color: #1f2937;
+}
+
+h1,
+h2,
+h3,
+p,
+span,
+button,
+input,
+select {
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+
+/* =====================================================
+   HEADER TEXT
+   ===================================================== */
+
+.welcome h1 {
+    font-size: 42px;
+    font-weight: 700;
+    letter-spacing: -1px;
+}
+
+.welcome h2 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #475569;
+}
+
+
+/* =====================================================
+   ADD TASK BUTTON
+   ===================================================== */
+
+.add-task-form button {
+    border: none;
+    border-radius: 12px;
+    padding: 15px 24px;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    cursor: pointer;
+    letter-spacing: 0.2px;
+}
+
+
+/* =====================================================
+   SEARCH
+   ===================================================== */
+
+.task-controls input,
+.task-controls select {
+    font-size: 15px;
+    font-weight: 500;
+    color: #334155;
+}
+
+
+/* =====================================================
+   STATISTICS TEXT
+   ===================================================== */
+
+.stat-card span {
+    font-size: 14px;
+    font-weight: 500;
+    color: #64748b;
+}
+
+.stat-card strong {
+    font-size: 30px;
+    font-weight: 700;
+    color: #111827;
+}
+
+
+/* =====================================================
+   MY TASKS TITLE
+   ===================================================== */
+
+.tasks-title {
+    font-size: 25px;
+    font-weight: 700;
+    color: #334155;
+}
+
+
+/* =====================================================
+   TASK NAME
+   ===================================================== */
+
+.task-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1f2937;
+}
+
+
+/* =====================================================
+   COMPLETED TASK
+   ===================================================== */
+
+.completed-task-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #64748b;
+}
+
+
+/* =====================================================
+   DUE DATE
+   ===================================================== */
+
+.due-date {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+
+/* =====================================================
+   ALL TASK BUTTONS
+   ===================================================== */
+
+.task-actions button {
+    border: none;
+    border-radius: 10px;
+
+    padding: 11px 16px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: transform 0.15s ease,
+                box-shadow 0.15s ease;
+}
+
+
+/* =====================================================
+   COMPLETE BUTTON
+   ===================================================== */
+
+.complete-btn {
+    font-weight: 600;
+}
+
+.complete-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.12);
+}
+
+
+/* =====================================================
+   DELETE BUTTON
+   ===================================================== */
+
+.delete-btn {
+    font-weight: 600;
+}
+
+.delete-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.12);
+}
+
+
+/* =====================================================
+   EDIT BUTTON
+   ===================================================== */
+
+.edit-btn {
+    font-weight: 600;
+}
+
+.edit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.12);
+}
+
+
+/* =====================================================
+   COMPLETED BADGE
+   ===================================================== */
+
+.completed-task-title::after {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+}
+
+
+/* =====================================================
+   PROFILE TEXT
+   ===================================================== */
+
+.profile-section p {
+    font-size: 13px;
+    font-weight: 500;
+    color: #64748b;
+}
+
+
+/* =====================================================
+   MOBILE
+   ===================================================== */
+
+@media (max-width: 700px) {
+
+    .welcome h1 {
+        font-size: 30px;
+    }
+
+    .welcome h2 {
+        font-size: 20px;
+    }
+
+    .task-name {
+        font-size: 15px;
+    }
+
+    .task-actions button {
+        font-size: 13px;
+        padding: 9px 12px;
+    }
+
+}
+/* =====================================================
+   MODERN TASK FILTER DROPDOWN
+   ===================================================== */
+
+.task-controls select {
+    width: 220px;
+    height: 54px;
+
+    padding: 0 18px;
+
+    border: 1.5px solid #dbe2ea;
+    border-radius: 14px;
+
+    background: #ffffff;
+
+    color: #334155;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    outline: none;
+
+    cursor: pointer;
+
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+
+    transition: all 0.2s ease;
+}
+
+
+/* Hover */
+
+.task-controls select:hover {
+    border-color: #667eea;
+
+    box-shadow: 0 6px 18px rgba(102, 126, 234, 0.15);
+}
+
+
+/* Click / Focus */
+
+.task-controls select:focus {
+    border-color: #667eea;
+
+    box-shadow:
+        0 0 0 4px rgba(102, 126, 234, 0.12),
+        0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+
+/* Dropdown Options */
+
+.task-controls select option {
+    padding: 12px;
+
+    font-size: 15px;
+    font-weight: 500;
+
+    background: #ffffff;
+    color: #334155;
+}
+
+
+/* Mobile */
+
+@media (max-width: 700px) {
+
+    .task-controls select {
+        width: 100%;
+        height: 52px;
+    }
+
+}
+/* =====================================================
+   CUSTOM TASK FILTER
+   ===================================================== */
+
+.custom-filter {
+    position: relative;
+    width: 220px;
+}
+
+.filter-button {
+    width: 100%;
+    height: 54px;
+
+    padding: 0 18px;
+
+    border: 1.5px solid #dbe2ea;
+    border-radius: 14px;
+
+    background: #ffffff;
+
+    color: #1f2937;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: relative;
+
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+}
+
+.filter-arrow {
+    position: absolute;
+    right: 18px;
+    font-size: 22px;
+}
+
+.filter-menu {
+    display: none;
+
+    position: absolute;
+    top: 60px;
+    left: 0;
+
+    width: 100%;
+
+    background: white;
+
+    border: 1px solid #e1e5eb;
+    border-radius: 14px;
+
+    padding: 6px;
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+
+    z-index: 1000;
+}
+
+.filter-menu.show {
+    display: block;
+}
+
+.filter-option {
+    height: 45px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+
+    color: #334155;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.filter-option:hover {
+    background: #f1f4ff;
+}
+
+.filter-option.active {
+    background: #eef2ff;
+    color: #4f46e5;
+}
+
+
+/* Mobile */
+
+@media (max-width: 700px) {
+
+    .custom-filter {
+        width: 100%;
+    }
+
+}
+/* ================= PRIORITY SELECT ================= */
+
+.priority-select {
+    width: 220px;
+    height: 54px;
+    padding: 0 18px;
+    border: 1.5px solid #dbe2ea;
+    border-radius: 14px;
+    background: #ffffff;
+    color: #334155;
+    font-size: 15px;
+    font-weight: 600;
+    text-align: center;
+    text-align-last: center;
+    cursor: pointer;
+    outline: none;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+}
+
+.priority-select:hover {
+    border-color: #667eea;
+}
+
+.priority-select:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.12);
+}
+
+.priority-select option {
+    text-align: center;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 10px;
+}
+/* ================= INTERACTIVE PRIORITY DROPDOWN ================= */
+
+.priority-dropdown {
+    position: relative;
+    width: 220px;
+}
+
+.priority-button {
+    width: 100%;
+    height: 54px;
+    padding: 0 18px;
+    border: 1.5px solid #dbe2ea;
+    border-radius: 14px;
+    background: #ffffff;
+    color: #334155;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: relative;
+
+    box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+}
+
+.priority-button:hover {
+    border-color: #667eea;
+    box-shadow: 0 6px 18px rgba(102,126,234,0.15);
+}
+
+.priority-arrow {
+    position: absolute;
+    right: 18px;
+    font-size: 21px;
+}
+
+
+/* ================= PRIORITY MENU ================= */
+
+.priority-menu {
+    display: none;
+
+    position: absolute;
+    top: 61px;
+    left: 0;
+
+    width: 100%;
+
+    background: #ffffff;
+
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+
+    padding: 6px;
+
+    box-shadow: 0 12px 30px rgba(0,0,0,0.14);
+
+    z-index: 2000;
+}
+
+.priority-menu.show {
+    display: block;
+}
+
+/* ================= SMALL PRIORITY BUTTON ================= */
+/* =====================================================
+   FINAL TASK PRIORITY DROPDOWN FIX
+   ===================================================== */
+
+.task-item {
+    position: relative;
+}
+
+
+/* Priority container */
+
+.task-item .priority-dropdown {
+    position: relative;
+    width: 160px;
+    z-index: 20;
+}
+
+
+/* Button */
+
+.task-item .priority-button {
+    width: 160px;
+    height: 44px;
+    padding: 0 12px;
+    border-radius: 11px;
+    font-size: 14px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: relative;
+}
+
+
+/* Arrow */
+
+.task-item .priority-arrow {
+    position: absolute;
+    right: 12px;
+    font-size: 17px;
+}
+
+
+/* Dropdown menu */
+
+.task-item .priority-menu {
+    position: absolute;
+
+    top: calc(100% + 6px);
+    left: 0;
+
+    width: 160px;
+
+    background: #ffffff;
+
+    border: 1px solid #dbe2ea;
+    border-radius: 12px;
+
+    padding: 5px;
+
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+
+    z-index: 99999;
+
+    display: none;
+
+    overflow: visible;
+}
+
+
+/* Open */
+
+.task-item .priority-menu.show {
+    display: block;
+}
+
+
+/* Options */
+
+.task-item .priority-option {
+    width: 100%;
+    height: 36px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 7px;
+
+    margin: 2px 0;
+    padding: 0;
+
+    border-radius: 8px;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: all 0.18s ease;
+}
+
+
+/* High */
+
+.task-item .high-option {
+    color: #dc2626;
+}
+
+.task-item .high-option:hover {
+    background: #fff1f2;
+}
+
+
+/* Medium */
+
+.task-item .medium-option {
+    color: #b77900;
+}
+
+.task-item .medium-option:hover {
+    background: #fffbeb;
+}
+
+
+/* Low */
+
+.task-item .low-option {
+    color: #16a34a;
+}
+
+.task-item .low-option:hover {
+    background: #f0fdf4;
+}
+
+
+/* Selected */
+
+.task-item .priority-option.active {
+    background: #eef2ff;
+}
+
+
+/* When dropdown is open */
+
+.task-item:has(.priority-menu.show) {
+    z-index: 1000;
+}
+
+
+/* Mobile */
+
+@media (max-width: 700px) {
+
+    .task-item .priority-dropdown {
+        width: 145px;
+    }
+
+    .task-item .priority-button {
+        width: 145px;
+    }
+
+    .task-item .priority-menu {
+        width: 145px;
+    }
+
+}
+/* Dropdown stays above other tasks */
+
+.priority-dropdown {
+    z-index: 100;
+}
+
+.priority-menu.show {
+    display: block;
+}
+
+
+/* ================= OPTIONS ================= */
+
+.priority-option {
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    border-radius: 10px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    margin: 3px 0;
+
+    transition: 0.2s;
+}
+
+.priority-option:hover {
+    transform: translateX(3px);
+}
+
+
+/* HIGH */
+
+.high-option {
+    color: #dc2626;
+}
+
+.high-option:hover {
+    background: #fff1f2;
+}
+
+
+/* MEDIUM */
+
+.medium-option {
+    color: #b77900;
+}
+
+.medium-option:hover {
+    background: #fffbeb;
+}
+
+
+/* LOW */
+
+.low-option {
+    color: #16a34a;
+}
+
+.low-option:hover {
+    background: #f0fdf4;
+}
+
+
+/* SELECTED */
+
+.priority-option.active {
+    background: #f1f5ff;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 700px) {
+
+    .priority-dropdown {
+        width: 100%;
+    }
+
+}
+/* ================= INTERACTIVE TASK LIST ================= */
+
+.task-item {
+    transition: 0.25s ease;
+    cursor: default;
+}
+
+.task-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.10);
+    border-color: #c7d2fe;
+}
+
+
+/* ================= TASK BUTTONS ================= */
+
+.task-actions button {
+    transition: all 0.2s ease;
+}
+
+.task-actions button:hover {
+    transform: translateY(-2px);
+}
+
+.task-actions button:active {
+    transform: scale(0.96);
+}
+
+
+/* ================= COMPLETE BUTTON ================= */
+
+.complete-btn:hover {
+    box-shadow: 0 5px 15px rgba(16, 185, 129, 0.25);
+}
+
+
+/* ================= DELETE BUTTON ================= */
+
+.delete-btn:hover {
+    box-shadow: 0 5px 15px rgba(239, 68, 68, 0.25);
+}
+
+
+/* ================= EDIT BUTTON ================= */
+
+.edit-btn:hover {
+    box-shadow: 0 5px 15px rgba(245, 158, 11, 0.25);
+}
+
+
+/* ================= TASK NAME ================= */
+
+.task-name {
+    transition: 0.2s ease;
+}
+
+.task-item:hover .task-name {
+    transform: translateX(4px);
+}
+
+
+/* ================= PRIORITY ================= */
+
+.task-priority {
+    transition: 0.2s ease;
+}
+
+.task-item:hover .task-priority {
+    transform: scale(1.04);
+}
+
+
+/* ================= DUE DATE ================= */
+
+.due-date {
+    transition: 0.2s ease;
+}
+
+.task-item:hover .due-date {
+    transform: scale(1.03);
+}
+/* =========================================================
+   REGISTER / AUTH PAGE
+   ========================================================= */
+
+.auth-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 20px;
+    box-sizing: border-box;
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 430px;
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 22px;
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.12);
+    box-sizing: border-box;
+}
+
+.auth-icon {
+    width: 65px;
+    height: 65px;
+    margin: 0 auto 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #eef2ff;
+    border-radius: 18px;
+    font-size: 30px;
+}
+
+.auth-card h1 {
+    margin: 0;
+    text-align: center;
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.auth-subtitle {
+    text-align: center;
+    color: #6b7280;
+    margin: 10px 0 28px;
+    line-height: 1.5;
+}
+
+.auth-group {
+    margin-bottom: 18px;
+}
+
+.auth-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.auth-group input {
+    width: 100%;
+    height: 48px;
+    padding: 0 14px;
+    border: 1px solid #d8dee8;
+    border-radius: 10px;
+    outline: none;
+    font-size: 14px;
+    box-sizing: border-box;
+    transition: 0.2s;
+}
+
+.auth-group input:focus {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
+}
+
+.auth-btn {
+    width: 100%;
+    height: 50px;
+    border: none;
+    border-radius: 11px;
+    background: #4f46e5;
+    color: white;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.auth-btn:hover {
+    transform: translateY(-1px);
+    background: #4338ca;
+}
+
+.auth-footer {
+    text-align: center;
+    margin: 24px 0 0;
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.auth-footer a {
+    color: #4f46e5;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.auth-message {
+    padding: 11px 14px;
+    margin-bottom: 18px;
+    border-radius: 9px;
+    background: #fef2f2;
+    color: #dc2626;
+    font-size: 14px;
+    text-align: center;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 500px) {
+
+    .auth-card {
+        padding: 28px 22px;
+    }
+
+    .auth-card h1 {
+        font-size: 26px;
+    }
+
+}
+.logout-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 8px;
+    padding: 9px 18px;
+    background: #ef4444;
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: 0.2s ease;
+}
+
+.logout-btn:hover {
+    background: #dc2626;
+    transform: translateY(-1px);
+}
+.profile-btn {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px 20px;
+    margin-top: 15px;
+    text-align: center;
+    text-decoration: none;
+    background: #4f46e5;
+    color: white;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.profile-btn:hover {
+    background: #3730a3;
+    transform: translateY(-2px);
+}
+.change-password-btn {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 18px;
+    background: #f59e0b;
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.change-password-btn:hover {
+    background: #d97706;
+    transform: translateY(-1px);
+}

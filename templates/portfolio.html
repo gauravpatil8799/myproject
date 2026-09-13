@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ profile.full_name|default:user.username }} | Portfolio</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f7fb;
+            color: #1f2937;
+        }
+
+        /* NAVBAR */
+
+        .navbar {
+            background: #111827;
+            color: white;
+            padding: 18px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 10px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            background: #374151;
+            padding: 9px 15px;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .nav-links a:hover {
+            background: #4f46e5;
+        }
+
+        /* HERO */
+
+        .hero {
+            min-height: 520px;
+            padding: 70px 7%;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, #eef2ff, #ffffff);
+        }
+
+        .hero-container {
+            max-width: 1100px;
+            width: 100%;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 60px;
+        }
+
+        .hero-text {
+            flex: 1;
+        }
+
+        .hello {
+            color: #4f46e5;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .hero h1 {
+            font-size: 52px;
+            color: #111827;
+            margin-bottom: 15px;
+            line-height: 1.15;
+        }
+
+        .hero h1 span {
+            color: #4f46e5;
+        }
+
+        .hero-description {
+            color: #6b7280;
+            font-size: 18px;
+            max-width: 650px;
+            margin-bottom: 25px;
+            white-space: pre-line;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary,
+        .btn-secondary {
+            padding: 12px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .btn-primary {
+            background: #4f46e5;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #3730a3;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #4f46e5;
+            border: 1px solid #c7d2fe;
+        }
+
+        .btn-secondary:hover {
+            background: #eef2ff;
+        }
+
+        /* PROFILE PHOTO */
+
+        .photo-box {
+            width: 260px;
+            height: 260px;
+            border-radius: 50%;
+            overflow: hidden;
+            background: #e5e7eb;
+            border: 8px solid white;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+            flex-shrink: 0;
+        }
+
+        .photo-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .default-photo {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+        }
+
+        /* MAIN */
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 60px 25px;
+        }
+
+        .section {
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 30px;
+            margin-bottom: 30px;
+            color: #111827;
+        }
+
+        .section-title span {
+            color: #4f46e5;
+        }
+
+        /* ABOUT */
+
+        .about-card {
+            background: white;
+            padding: 35px;
+            border-radius: 18px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.07);
+            text-align: center;
+        }
+
+        .about-card p {
+            color: #6b7280;
+            font-size: 17px;
+            white-space: pre-line;
+        }
+
+        /* INFORMATION */
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .info-card {
+            background: white;
+            padding: 25px;
+            border-radius: 18px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.07);
+        }
+
+        .info-icon {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+        .info-card h3 {
+            margin-bottom: 8px;
+            color: #111827;
+        }
+
+        .info-card p {
+            color: #6b7280;
+            white-space: pre-line;
+        }
+
+        /* SKILLS */
+
+        .skills-card {
+            background: white;
+            padding: 30px;
+            border-radius: 18px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.07);
+        }
+
+        .skills {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .skill {
+            background: #eef2ff;
+            color: #4338ca;
+            padding: 10px 18px;
+            border-radius: 25px;
+            font-weight: bold;
+        }
+
+        /* CONTENT CARDS */
+
+        .content-card {
+            background: white;
+            padding: 30px;
+            border-radius: 18px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.07);
+            border-left: 5px solid #4f46e5;
+        }
+
+        .content-card h3 {
+            margin-bottom: 12px;
+            font-size: 22px;
+        }
+
+        .content-card p {
+            color: #6b7280;
+            white-space: pre-line;
+        }
+
+        /* CONTACT */
+
+        .contact {
+            background: #111827;
+            color: white;
+            padding: 45px;
+            border-radius: 20px;
+            text-align: center;
+        }
+
+        .contact h2 {
+            margin-bottom: 12px;
+        }
+
+        .contact p {
+            color: #d1d5db;
+            margin-bottom: 22px;
+        }
+
+        .email-btn {
+            display: inline-block;
+            padding: 12px 22px;
+            background: #4f46e5;
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        .email-btn:hover {
+            background: #6366f1;
+        }
+
+        /* FOOTER */
+
+        footer {
+            background: #0b1120;
+            color: #9ca3af;
+            text-align: center;
+            padding: 25px;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 800px) {
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                padding: 50px 20px;
+            }
+
+            .hero-container {
+                flex-direction: column-reverse;
+                text-align: center;
+            }
+
+            .hero h1 {
+                font-size: 38px;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .photo-box {
+                width: 200px;
+                height: 200px;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- NAVBAR -->
+
+<nav class="navbar">
+
+    <div class="logo">
+        💼 My Portfolio
+    </div>
+
+    <div class="nav-links">
+
+        <a href="{% url 'home' %}">
+            🏠 Dashboard
+        </a>
+
+        <a href="{% url 'profile' %}">
+            👤 Profile
+        </a>
+
+        <a href="{% url 'logout' %}">
+            🚪 Logout
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- HERO -->
+
+<section class="hero">
+
+    <div class="hero-container">
+
+
+        <div class="hero-text">
+
+            <div class="hello">
+                👋 HELLO, I'M
+            </div>
+
+            <h1>
+                {{ profile.full_name|default:user.username }}
+            </h1>
+
+            <p class="hero-description">
+                {{ profile.about_me|default:"Welcome to my professional portfolio." }}
+            </p>
+
+            <div class="hero-buttons">
+
+                <a href="#projects" class="btn-primary">
+                    📂 My Projects
+                </a>
+
+                <a href="#contact" class="btn-secondary">
+                    📧 Contact Me
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <div class="photo-box">
+
+            {% if profile.photo %}
+
+                <img
+                    src="{{ profile.photo.url }}"
+                    alt="Profile Photo"
+                >
+
+            {% else %}
+
+                <div class="default-photo">
+                    👤
+                </div>
+
+            {% endif %}
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- MAIN -->
+
+<div class="container">
+
+
+    <!-- ABOUT -->
+
+    <section class="section">
+
+        <h2 class="section-title">
+            About <span>Me</span>
+        </h2>
+
+        <div class="about-card">
+
+            <p>
+                {{ profile.about_me|default:"No information added yet." }}
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- BASIC INFORMATION -->
+
+    <section class="section">
+
+        <h2 class="section-title">
+            Basic <span>Information</span>
+        </h2>
+
+        <div class="info-grid">
+
+
+            <div class="info-card">
+
+                <div class="info-icon">
+                    👤
+                </div>
+
+                <h3>
+                    Full Name
+                </h3>
+
+                <p>
+                    {{ profile.full_name|default:"Not added" }}
+                </p>
+
+            </div>
+
+
+            <div class="info-card">
+
+                <div class="info-icon">
+                    📧
+                </div>
+
+                <h3>
+                    Email
+                </h3>
+
+                <p>
+                    {{ user.email|default:"Not added" }}
+                </p>
+
+            </div>
+
+
+            <div class="info-card">
+
+                <div class="info-icon">
+                    🎓
+                </div>
+
+                <h3>
+                    Education
+                </h3>
+
+                <p>
+                    {{ profile.education|default:"Not added" }}
+                </p>
+
+            </div>
+
+
+            <div class="info-card">
+
+                <div class="info-icon">
+                    📅
+                </div>
+
+                <h3>
+                    Joining Date
+                </h3>
+
+                <p>
+                    {{ profile.joining_date|default:"Not added" }}
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- SKILLS -->
+
+    <section class="section">
+
+        <h2 class="section-title">
+            My <span>Skills</span>
+        </h2>
+
+        <div class="skills-card">
+
+            {% if profile.skills %}
+
+                <div class="skills">
+
+                    {% for skill in profile.skills.splitlines %}
+
+                        {% if skill %}
+
+                            <div class="skill">
+                                🛠️ {{ skill }}
+                            </div>
+
+                        {% endif %}
+
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+
+                <p style="text-align:center;color:#6b7280;">
+                    No skills added yet.
+                </p>
+
+            {% endif %}
+
+        </div>
+
+    </section>
+
+
+    <!-- PROJECTS -->
+
+    <section class="section" id="projects">
+
+        <h2 class="section-title">
+            My <span>Projects</span>
+        </h2>
+
+        <div class="content-card">
+
+            <h3>
+                📂 Projects
+            </h3>
+
+            <p>
+                {{ profile.projects|default:"No projects added yet." }}
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- ACHIEVEMENTS -->
+
+    <section class="section">
+
+        <h2 class="section-title">
+            My <span>Achievements</span>
+        </h2>
+
+        <div class="content-card">
+
+            <h3>
+                🏆 Achievements
+            </h3>
+
+            <p>
+                {{ profile.achievements|default:"No achievements added yet." }}
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- CERTIFICATIONS -->
+
+    <section class="section">
+
+        <h2 class="section-title">
+            My <span>Certifications</span>
+        </h2>
+
+        <div class="content-card">
+
+            <h3>
+                📜 Certifications
+            </h3>
+
+            <p>
+                {{ profile.certifications|default:"No certifications added yet." }}
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- CONTACT -->
+
+    <section class="section" id="contact">
+
+        <div class="contact">
+
+            <h2>
+                Let's Work Together 🤝
+            </h2>
+
+            <p>
+                Feel free to contact me for opportunities,
+                projects and collaboration.
+            </p>
+
+            {% if user.email %}
+
+                <a
+                    href="mailto:{{ user.email }}"
+                    class="email-btn"
+                >
+                    📧 {{ user.email }}
+                </a>
+
+            {% endif %}
+
+        </div>
+
+    </section>
+
+
+</div>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    © 2026
+    {{ profile.full_name|default:user.username }}
+    — All Rights Reserved.
+
+</footer>
+
+
+</body>
+
+</html>

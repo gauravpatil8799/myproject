@@ -1,0 +1,925 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My To-Do App</title>
+
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+
+    <style>
+
+        /* ================= PROFILE BUTTON ================= */
+
+        .profile-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 12px;
+            padding: 10px 20px;
+            background: #4f46e5;
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: 0.2s ease;
+        }
+
+        .profile-btn:hover {
+            background: #3730a3;
+            transform: translateY(-1px);
+        }
+
+
+        /* ================= LOGOUT BUTTON ================= */
+
+        .logout-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 8px;
+            padding: 9px 18px;
+            background: #ef4444;
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: 0.2s ease;
+        }
+
+        .logout-btn:hover {
+            background: #dc2626;
+            transform: translateY(-1px);
+        }
+
+
+        /* ================= PROFILE PHOTO ================= */
+
+        .profile-photo {
+            cursor: pointer;
+        }
+
+        .profile-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+
+    <!-- ================= HEADER ================= -->
+
+    <div class="header">
+
+        <div class="welcome">
+
+            <h1>
+                Hello {{ request.user.username }}! 👋
+            </h1>
+
+            <h2>
+                My To-Do App
+            </h2>
+
+        </div>
+
+
+        <!-- ================= PROFILE ================= -->
+
+        <div class="profile-section">
+
+            <form
+                method="POST"
+                enctype="multipart/form-data"
+                class="profile-form"
+            >
+
+                {% csrf_token %}
+
+                <label
+                    for="profilePhoto"
+                    class="profile-photo"
+                >
+
+                    {% if profile and profile.photo %}
+
+                        <img
+                            src="{{ profile.photo.url }}"
+                            alt="Profile Photo"
+                        >
+
+                    {% else %}
+
+                        <span>📷</span>
+
+                    {% endif %}
+
+                </label>
+
+
+                <input
+                    type="file"
+                    name="photo"
+                    id="profilePhoto"
+                    accept="image/*"
+                    hidden
+                    onchange="this.form.submit()"
+                >
+
+            </form>
+
+
+            <p>
+                Click to upload photo
+            </p>
+
+
+            <!-- MY PROFILE -->
+
+            <a
+                href="{% url 'profile' %}"
+                class="profile-btn"
+            >
+                👤 My Profile
+            </a>
+
+
+            <!-- LOGOUT -->
+
+            <a
+                href="{% url 'logout' %}"
+                class="logout-btn"
+            >
+                🚪 Logout
+            </a>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ================= ADD TASK ================= -->
+
+    <form
+        method="POST"
+        class="add-task-form"
+    >
+
+        {% csrf_token %}
+
+        <input
+            type="text"
+            name="title"
+            placeholder="What do you need to do?"
+            required
+        >
+
+
+        <input
+            type="date"
+            name="due_date"
+            title="Select Due Date"
+        >
+
+
+        <select
+            name="priority"
+            class="priority-select"
+            title="Select Priority"
+        >
+
+            <option value="high">
+                🔴 High
+            </option>
+
+            <option
+                value="medium"
+                selected
+            >
+                🟡 Medium
+            </option>
+
+            <option value="low">
+                🟢 Low
+            </option>
+
+        </select>
+
+
+        <button type="submit">
+            ➕ Add Task
+        </button>
+
+    </form>
+
+
+
+    <!-- ================= STATISTICS ================= -->
+
+    <div class="stats-container">
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                📋
+            </div>
+
+            <div>
+
+                <span>
+                    Total Tasks
+                </span>
+
+                <strong>
+                    {{ total_tasks }}
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                ✅
+            </div>
+
+            <div>
+
+                <span>
+                    Completed
+                </span>
+
+                <strong>
+                    {{ completed_tasks }}
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                ⏳
+            </div>
+
+            <div>
+
+                <span>
+                    Pending
+                </span>
+
+                <strong>
+                    {{ pending_tasks }}
+                </strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ================= SEARCH & FILTER ================= -->
+
+    <div class="task-controls">
+
+        <input
+            type="text"
+            id="taskSearch"
+            placeholder="🔎 Search tasks..."
+            onkeyup="applyTaskFilter()"
+        >
+
+
+        <div class="custom-filter">
+
+            <button
+                type="button"
+                class="filter-button"
+                onclick="toggleFilter()"
+            >
+
+                <span id="filterText">
+                    📋 All Tasks
+                </span>
+
+                <span class="filter-arrow">
+                    ⌄
+                </span>
+
+            </button>
+
+
+            <div
+                class="filter-menu"
+                id="filterMenu"
+            >
+
+                <div
+                    class="filter-option active"
+                    onclick="selectFilter(
+                        'all',
+                        '📋 All Tasks',
+                        this
+                    )"
+                >
+                    📋 All Tasks
+                </div>
+
+
+                <div
+                    class="filter-option"
+                    onclick="selectFilter(
+                        'pending',
+                        '⏳ Pending',
+                        this
+                    )"
+                >
+                    ⏳ Pending
+                </div>
+
+
+                <div
+                    class="filter-option"
+                    onclick="selectFilter(
+                        'completed',
+                        '✅ Completed',
+                        this
+                    )"
+                >
+                    ✅ Completed
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ================= TASK TITLE ================= -->
+
+    <h2 class="tasks-title">
+        My Tasks 📋
+    </h2>
+
+
+
+    <!-- ================= TASK LIST ================= -->
+
+    <ul>
+
+        {% for task in tasks %}
+
+        <li
+            class="task-item"
+            data-completed="{{ task.completed|yesno:'true,false' }}"
+        >
+
+
+            <!-- TASK NAME -->
+
+            <div class="task-info">
+
+                <span class="task-name">
+
+                    {% if task.completed %}
+
+                        <span class="completed-task-title">
+                            {{ task.title }}
+                        </span>
+
+                    {% else %}
+
+                        {{ task.title }}
+
+                    {% endif %}
+
+                </span>
+
+            </div>
+
+
+
+            <!-- ================= PRIORITY ================= -->
+
+            <div class="priority-dropdown">
+
+                <button
+                    type="button"
+                    class="priority-button"
+                    onclick="toggleTaskPriority({{ task.id }})"
+                >
+
+                    <span id="priorityText-{{ task.id }}">
+
+                        {% if task.priority == "high" %}
+
+                            🔴 High
+
+                        {% elif task.priority == "medium" %}
+
+                            🟡 Medium
+
+                        {% else %}
+
+                            🟢 Low
+
+                        {% endif %}
+
+                    </span>
+
+                    <span class="priority-arrow">
+                        ⌄
+                    </span>
+
+                </button>
+
+
+                <div
+                    class="priority-menu"
+                    id="priorityMenu-{{ task.id }}"
+                >
+
+                    <div
+                        class="priority-option high-option"
+                        onclick="selectTaskPriority(
+                            {{ task.id }},
+                            'high',
+                            '🔴 High'
+                        )"
+                    >
+                        🔴 High
+                    </div>
+
+
+                    <div
+                        class="priority-option medium-option"
+                        onclick="selectTaskPriority(
+                            {{ task.id }},
+                            'medium',
+                            '🟡 Medium'
+                        )"
+                    >
+                        🟡 Medium
+                    </div>
+
+
+                    <div
+                        class="priority-option low-option"
+                        onclick="selectTaskPriority(
+                            {{ task.id }},
+                            'low',
+                            '🟢 Low'
+                        )"
+                    >
+                        🟢 Low
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ================= DUE DATE ================= -->
+
+            {% if task.due_date %}
+
+                <span class="due-date">
+
+                    📅 Due:
+                    {{ task.due_date|date:"d M Y" }}
+
+                </span>
+
+            {% endif %}
+
+
+
+            <!-- ================= BUTTONS ================= -->
+
+            <div class="task-actions">
+
+                <a href="{% url 'complete_task' task.id %}">
+
+                    <button
+                        type="button"
+                        class="complete-btn"
+                    >
+
+                        {% if task.completed %}
+
+                            ↩ Undo
+
+                        {% else %}
+
+                            ✓ Complete
+
+                        {% endif %}
+
+                    </button>
+
+                </a>
+
+
+                <a
+                    href="{% url 'delete_task' task.id %}"
+                    onclick="return confirmDelete(
+                        '{{ task.title|escapejs }}'
+                    )"
+                >
+
+                    <button
+                        type="button"
+                        class="delete-btn"
+                    >
+                        🗑 Delete
+                    </button>
+
+                </a>
+
+
+                <a href="{% url 'edit_task' task.id %}">
+
+                    <button
+                        type="button"
+                        class="edit-btn"
+                    >
+                        ✏ Edit
+                    </button>
+
+                </a>
+
+            </div>
+
+        </li>
+
+
+        {% empty %}
+
+        <li class="empty-task">
+
+            🚀 No tasks yet.
+            Add your first task!
+
+        </li>
+
+        {% endfor %}
+
+    </ul>
+
+</div>
+
+
+
+<!-- =====================================================
+     JAVASCRIPT
+     ===================================================== -->
+
+<script>
+
+
+/* ================= FILTER ================= */
+
+let currentFilter = "all";
+
+
+function toggleFilter() {
+
+    document
+        .getElementById("filterMenu")
+        .classList.toggle("show");
+
+}
+
+
+function selectFilter(
+    value,
+    text,
+    element
+) {
+
+    currentFilter = value;
+
+    document
+        .getElementById("filterText")
+        .innerText = text;
+
+    document
+        .getElementById("filterMenu")
+        .classList.remove("show");
+
+
+    document
+        .querySelectorAll(".filter-option")
+        .forEach(function(option) {
+
+            option.classList.remove("active");
+
+        });
+
+
+    element.classList.add("active");
+
+    applyTaskFilter();
+
+}
+
+
+function applyTaskFilter() {
+
+    const search =
+        document
+            .getElementById("taskSearch")
+            .value
+            .toLowerCase()
+            .trim();
+
+
+    const tasks =
+        document.querySelectorAll(".task-item");
+
+
+    tasks.forEach(function(task) {
+
+        const text =
+            task.innerText.toLowerCase();
+
+
+        const completed =
+            task.dataset.completed === "true";
+
+
+        const matchesSearch =
+            text.includes(search);
+
+
+        let matchesFilter = true;
+
+
+        if (currentFilter === "completed") {
+
+            matchesFilter = completed;
+
+        }
+
+
+        if (currentFilter === "pending") {
+
+            matchesFilter = !completed;
+
+        }
+
+
+        task.style.display =
+            matchesSearch && matchesFilter
+                ? ""
+                : "none";
+
+    });
+
+}
+
+
+
+/* =====================================================
+   TASK PRIORITY
+   ===================================================== */
+
+function toggleTaskPriority(taskId) {
+
+    const menu =
+        document.getElementById(
+            "priorityMenu-" + taskId
+        );
+
+
+    document
+        .querySelectorAll(".priority-menu")
+        .forEach(function(item) {
+
+            if (item !== menu) {
+
+                item.classList.remove("show");
+
+            }
+
+        });
+
+
+    menu.classList.toggle("show");
+
+}
+
+
+
+/* =====================================================
+   SELECT + SAVE PRIORITY
+   ===================================================== */
+
+function selectTaskPriority(
+    taskId,
+    value,
+    text
+) {
+
+    const textElement =
+        document.getElementById(
+            "priorityText-" + taskId
+        );
+
+
+    textElement.innerText = text;
+
+
+    const menu =
+        document.getElementById(
+            "priorityMenu-" + taskId
+        );
+
+
+    menu.classList.remove("show");
+
+
+    fetch(
+        "/update-priority/" + taskId + "/",
+        {
+            method: "POST",
+
+            headers: {
+
+                "Content-Type":
+                    "application/x-www-form-urlencoded",
+
+                "X-CSRFToken":
+                    getCookie("csrftoken")
+
+            },
+
+            body:
+                "priority=" +
+                encodeURIComponent(value)
+
+        }
+    )
+
+    .then(function(response) {
+
+        return response.json();
+
+    })
+
+    .then(function(data) {
+
+        if (!data.success) {
+
+            alert(
+                "Priority update failed!"
+            );
+
+        }
+
+    })
+
+    .catch(function(error) {
+
+        console.error(
+            "Priority Error:",
+            error
+        );
+
+        alert(
+            "Something went wrong!"
+        );
+
+    });
+
+}
+
+
+
+/* =====================================================
+   CSRF COOKIE
+   ===================================================== */
+
+function getCookie(name) {
+
+    let cookieValue = null;
+
+
+    if (document.cookie) {
+
+        const cookies =
+            document.cookie.split(";");
+
+
+        for (
+            let cookie of cookies
+        ) {
+
+            cookie =
+                cookie.trim();
+
+
+            if (
+                cookie.substring(
+                    0,
+                    name.length + 1
+                ) ===
+                name + "="
+            ) {
+
+                cookieValue =
+                    decodeURIComponent(
+                        cookie.substring(
+                            name.length + 1
+                        )
+                    );
+
+                break;
+
+            }
+
+        }
+
+    }
+
+
+    return cookieValue;
+
+}
+
+
+
+/* =====================================================
+   CLOSE PRIORITY DROPDOWN
+   ===================================================== */
+
+document.addEventListener(
+    "click",
+    function(event) {
+
+        if (
+            !event.target.closest(
+                ".priority-dropdown"
+            )
+        ) {
+
+            document
+                .querySelectorAll(
+                    ".priority-menu"
+                )
+                .forEach(function(menu) {
+
+                    menu.classList.remove(
+                        "show"
+                    );
+
+                });
+
+        }
+
+    }
+);
+
+
+
+/* ================= DELETE CONFIRMATION ================= */
+
+function confirmDelete(taskName) {
+
+    return confirm(
+        "Are you sure you want to delete this task?\n\n" +
+        taskName
+    );
+
+}
+
+</script>
+
+
+</body>
+
+</html>

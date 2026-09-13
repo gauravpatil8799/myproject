@@ -1,0 +1,265 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Edit Task | My To-Do App</title>
+
+    <link
+        rel="stylesheet"
+        href="{% static 'style.css' %}"
+    >
+
+</head>
+
+<body>
+
+    <div class="edit-page">
+
+        <div class="edit-card">
+
+
+            <!-- ================= HEADER ================= -->
+
+            <div class="edit-header">
+
+                <div class="edit-icon">
+                    ✏️
+                </div>
+
+                <h1>
+                    Edit Task
+                </h1>
+
+                <p>
+                    Customize your task details and keep your plans on track.
+                </p>
+
+            </div>
+
+
+            <!-- ================= FORM ================= -->
+
+            <form
+                method="POST"
+                class="edit-form"
+            >
+
+                {% csrf_token %}
+
+
+                <!-- ================= TASK NAME ================= -->
+
+                <div class="form-group">
+
+                    <label for="title">
+                        📝 Task Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="title"
+                        name="title"
+                        value="{{ task.title }}"
+                        placeholder="Enter task name"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- ================= DUE DATE ================= -->
+
+                <div class="form-group">
+
+                    <label for="due_date">
+                        📅 Due Date
+                    </label>
+
+                    <input
+                        type="date"
+                        id="due_date"
+                        name="due_date"
+                        value="{{ task.due_date|date:'Y-m-d' }}"
+                    >
+
+
+                    <!-- CLEAR DATE -->
+
+                    <div class="date-actions">
+
+                        <button
+                            type="button"
+                            onclick="clearDate()"
+                        >
+                            🗑 Clear Date
+                        </button>
+
+                    </div>
+
+                    <small>
+                        Change the existing date or select a new date.
+                    </small>
+
+                </div>
+
+
+                <!-- ================= PRIORITY ================= -->
+
+                <div class="form-group">
+
+                    <label for="priority">
+                        🎯 Priority
+                    </label>
+
+                    <select
+                        id="priority"
+                        name="priority"
+                        class="priority-select"
+                    >
+
+                        <option
+                            value="high"
+                            {% if task.priority == "high" %}
+                                selected
+                            {% endif %}
+                        >
+                            🔴 High
+                        </option>
+
+
+                        <option
+                            value="medium"
+                            {% if task.priority == "medium" %}
+                                selected
+                            {% endif %}
+                        >
+                            🟡 Medium
+                        </option>
+
+
+                        <option
+                            value="low"
+                            {% if task.priority == "low" %}
+                                selected
+                            {% endif %}
+                        >
+                            🟢 Low
+                        </option>
+
+                    </select>
+
+                    <small>
+                        Select the priority level for this task.
+                    </small>
+
+                </div>
+
+
+                <!-- ================= BUTTONS ================= -->
+
+                <div class="edit-actions">
+
+                    <button
+                        type="submit"
+                        class="save-btn"
+                    >
+                        💾 Save Changes
+                    </button>
+
+
+                    <a
+                        href="{% url 'home' %}"
+                        class="cancel-btn"
+                    >
+                        ✕ Cancel
+                    </a>
+
+                </div>
+
+            </form>
+
+
+            <!-- ================= TASK PREVIEW ================= -->
+
+            <div class="task-preview">
+
+                <span>
+                    Current Task
+                </span>
+
+                <strong>
+                    {{ task.title }}
+                </strong>
+
+
+                {% if task.due_date %}
+
+                    <small>
+                        📅 {{ task.due_date|date:"d M Y" }}
+                    </small>
+
+                {% else %}
+
+                    <small>
+                        📅 No due date
+                    </small>
+
+                {% endif %}
+
+
+                <!-- CURRENT PRIORITY -->
+
+                {% if task.priority == "high" %}
+
+                    <small>
+                        🔴 High Priority
+                    </small>
+
+                {% elif task.priority == "medium" %}
+
+                    <small>
+                        🟡 Medium Priority
+                    </small>
+
+                {% else %}
+
+                    <small>
+                        🟢 Low Priority
+                    </small>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script>
+
+        function clearDate() {
+
+            document
+                .getElementById("due_date")
+                .value = "";
+
+        }
+
+    </script>
+
+</body>
+
+</html>

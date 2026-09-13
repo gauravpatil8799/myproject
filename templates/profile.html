@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Profile | To-Do App</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f7fb;
+            color: #1f2937;
+        }
+
+        /* ================= TOP BAR ================= */
+
+        .topbar {
+            background: #111827;
+            color: white;
+            padding: 18px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .topbar h2 {
+            font-size: 22px;
+        }
+
+        .top-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .top-btn {
+            text-decoration: none;
+            color: white;
+            background: #374151;
+            padding: 10px 16px;
+            border-radius: 9px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .top-btn:hover {
+            background: #4f46e5;
+        }
+
+        /* ================= CONTAINER ================= */
+
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            margin: auto;
+            padding: 40px 20px 60px;
+        }
+
+        /* ================= PROFILE HEADER ================= */
+
+        .profile-header {
+            background: white;
+            border-radius: 22px;
+            padding: 35px;
+            text-align: center;
+            box-shadow: 0 10px 35px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+        }
+
+        .profile-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 6px solid #eef2ff;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+        }
+
+        .default-photo {
+            width: 150px;
+            height: 150px;
+            margin: auto;
+            border-radius: 50%;
+            background: #eef2ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 65px;
+            border: 6px solid white;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+        }
+
+        .profile-header h1 {
+            margin-top: 20px;
+            font-size: 30px;
+            color: #111827;
+        }
+
+        .profile-header p {
+            margin-top: 7px;
+            color: #6b7280;
+        }
+
+        /* ================= CARD ================= */
+
+        .card {
+            background: white;
+            border-radius: 18px;
+            padding: 28px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.07);
+        }
+
+        .card-title {
+            font-size: 22px;
+            margin-bottom: 22px;
+            color: #111827;
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 12px;
+        }
+
+        /* ================= FORM ================= */
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #374151;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 13px 14px;
+            border: 1px solid #d1d5db;
+            border-radius: 10px;
+            font-size: 14px;
+            font-family: Arial, sans-serif;
+            outline: none;
+            background: #fff;
+        }
+
+        input:focus,
+        textarea:focus {
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 3px rgba(79,70,229,0.10);
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* ================= READ ONLY ================= */
+
+        .readonly {
+            background: #f3f4f6;
+            color: #6b7280;
+            cursor: not-allowed;
+        }
+
+        /* ================= PHOTO UPLOAD ================= */
+
+        .photo-upload {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .photo-upload input {
+            max-width: 350px;
+            margin: auto;
+        }
+
+        .upload-note {
+            margin-top: 8px;
+            color: #6b7280;
+            font-size: 12px;
+        }
+
+        /* ================= PASSWORD ================= */
+
+        .password-box {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .password-display {
+            width: 100%;
+            padding: 13px 14px;
+            border: 1px solid #d1d5db;
+            border-radius: 10px;
+            background: #f3f4f6;
+            color: #6b7280;
+            letter-spacing: 3px;
+            font-weight: bold;
+        }
+
+        .change-password-btn {
+            display: inline-block;
+            margin-top: 10px;
+            width: fit-content;
+            padding: 10px 18px;
+            background: #f59e0b;
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        .change-password-btn:hover {
+            background: #d97706;
+            transform: translateY(-1px);
+        }
+
+        /* ================= SAVE BUTTON ================= */
+
+        .save-section {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .save-btn {
+            border: none;
+            background: #4f46e5;
+            color: white;
+            padding: 14px 35px;
+            border-radius: 11px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .save-btn:hover {
+            background: #3730a3;
+            transform: translateY(-2px);
+        }
+
+        /* ================= INFO TEXT ================= */
+
+        .info-text {
+            color: #6b7280;
+            font-size: 13px;
+            margin-top: 6px;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 700px) {
+
+            .topbar {
+                padding: 15px 20px;
+            }
+
+            .topbar h2 {
+                font-size: 18px;
+            }
+
+            .top-buttons {
+                gap: 5px;
+            }
+
+            .top-btn {
+                padding: 8px 10px;
+                font-size: 12px;
+            }
+
+            .container {
+                padding: 25px 15px 40px;
+            }
+
+            .profile-header {
+                padding: 25px 15px;
+            }
+
+            .profile-header h1 {
+                font-size: 24px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .full-width {
+                grid-column: auto;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= TOP BAR ================= -->
+
+<div class="topbar">
+
+    <h2>
+        👤 My Profile
+    </h2>
+
+    <div class="top-buttons">
+
+        <a href="{% url 'home' %}" class="top-btn">
+            🏠 Dashboard
+        </a>
+
+        <a href="{% url 'portfolio' %}" class="top-btn">
+            💼 Portfolio
+        </a>
+
+    </div>
+
+</div>
+
+
+<div class="container">
+
+
+    <!-- ================= PROFILE HEADER ================= -->
+
+    <div class="profile-header">
+
+        {% if profile.photo %}
+
+            <img
+                src="{{ profile.photo.url }}"
+                alt="Profile Photo"
+                class="profile-photo"
+            >
+
+        {% else %}
+
+            <div class="default-photo">
+                👤
+            </div>
+
+        {% endif %}
+
+
+        <h1>
+            {{ profile.full_name|default:user.username }}
+        </h1>
+
+        <p>
+            @{{ user.username }}
+        </p>
+
+
+        <!-- PHOTO UPLOAD -->
+
+        <div class="photo-upload">
+
+            <label>
+                📷 Change Profile Photo
+            </label>
+
+            <input
+                type="file"
+                name="photo"
+                form="profile-form"
+                accept="image/*"
+            >
+
+            <p class="upload-note">
+                JPG, JPEG or PNG image recommended.
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ================= PROFILE FORM ================= -->
+
+    <form
+        method="POST"
+        enctype="multipart/form-data"
+        id="profile-form"
+    >
+
+        {% csrf_token %}
+
+
+        <!-- ================= BASIC INFORMATION ================= -->
+
+        <div class="card">
+
+            <h2 class="card-title">
+                👤 Basic Information
+            </h2>
+
+
+            <div class="form-grid">
+
+
+                <!-- FULL NAME -->
+
+                <div class="form-group">
+
+                    <label>
+                        🧑 Full Name
+                    </label>
+
+                    <input
+                        type="text"
+                        name="full_name"
+                        value="{{ profile.full_name }}"
+                        placeholder="Enter your full name"
+                    >
+
+                </div>
+
+
+
+                <!-- USERNAME -->
+
+                <div class="form-group">
+
+                    <label>
+                        👤 Username
+                    </label>
+
+                    <input
+                        type="text"
+                        value="{{ user.username }}"
+                        class="readonly"
+                        readonly
+                    >
+
+                    <p class="info-text">
+                        Username cannot be changed here.
+                    </p>
+
+                </div>
+
+
+
+                <!-- EMAIL -->
+
+                <div class="form-group">
+
+                    <label>
+                        📧 Email
+                    </label>
+
+                    <input
+                        type="email"
+                        value="{{ user.email }}"
+                        class="readonly"
+                        readonly
+                    >
+
+                </div>
+
+
+
+                <!-- JOINING DATE -->
+
+                <div class="form-group">
+
+                    <label>
+                        📅 Joining Date
+                    </label>
+
+                    <input
+                        type="date"
+                        name="joining_date"
+                        value="{{ profile.joining_date|date:'Y-m-d' }}"
+                    >
+
+                </div>
+
+
+
+                <!-- PASSWORD -->
+
+                <div class="form-group password-box">
+
+                    <label>
+                        🔒 Password
+                    </label>
+
+                    <div class="password-display">
+                        ••••••••
+                    </div>
+
+                    <a
+                        href="{% url 'change_password' %}"
+                        class="change-password-btn"
+                    >
+                        🔑 Change Password
+                    </a>
+
+                    <p class="info-text">
+                        For security, your actual password is never displayed.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ================= EDUCATION ================= -->
+
+        <div class="card">
+
+            <h2 class="card-title">
+                🎓 Education
+            </h2>
+
+            <div class="form-group">
+
+                <label>
+                    Education Details
+                </label>
+
+                <textarea
+                    name="education"
+                    placeholder="Example: BCA, MCA, Computer Science..."
+                >{{ profile.education }}</textarea>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ================= SKILLS ================= -->
+
+        <div class="card">
+
+            <h2 class="card-title">
+                🛠️ Skills
+            </h2>
+
+            <div class="form-group">
+
+                <label>
+                    Your Skills
+                </label>
+
+                <textarea
+                    name="skills"
+                    placeholder="Example:
+Python
+Django
+Java
+HTML
+CSS
+JavaScript
+SQL
+PostgreSQL"
+                >{{ profile.skills }}</textarea>
+
+                <p class="info-text">
+                    You can write multiple skills, one per line.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ================= ABOUT ME ================= -->
+
+        <div class="card">
+
+            <h2 class="card-title">
+                🧑‍💻 About Me
+            </h2>
+
+            <div class="form-group">
+
+                <label>
+                    About Yourself
+                </label>
+
+                <textarea
+                    name="about_me"
+                    placeholder="Write something about yourself..."
+                >{{ profile.about_me }}</textarea>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ================= PROJECTS ================= -->
+
+        <div class="card">
+
+            <h2 class="card-title">
+                📂 Projects
+            </h2>
+
+            <div class="form-group">
+
+                <label>
+                    Your Projects
+                </label>
+
+                <textarea
+                    name="projects"
+                    placeholder="Write your projects here..."
+                >{{ profile.projects }}</textarea>
+
+                <p class="info-text">
+                    Add project name, technologies and short description.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ================= ACHIEVEMENTS ================= -->
+
+        <div class="card">
+
+            <h2 class="card-title">
+                🏆 Achievements
+            </h2>
+
+            <div class="form-group">
+
+                <label>
+                    Your Achievements
+                </label>
+
+                <textarea
+                    name="achievements"
+                    placeholder="Write your achievements here..."
+                >{{ profile.achievements }}</textarea>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ================= CERTIFICATIONS ================= -->
+
+        <div class="card">
+
+            <h2 class="card-title">
+                📜 Certifications
+            </h2>
+
+            <div class="form-group">
+
+                <label>
+                    Your Certifications
+                </label>
+
+                <textarea
+                    name="certifications"
+                    placeholder="Write your certifications here..."
+                >{{ profile.certifications }}</textarea>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ================= SAVE ================= -->
+
+        <div class="save-section">
+
+            <button
+                type="submit"
+                class="save-btn"
+            >
+                💾 Save Profile
+            </button>
+
+        </div>
+
+
+    </form>
+
+</div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,140 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Register | My To-Do App</title>
+
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+
+<body>
+
+    <div class="auth-page">
+
+        <div class="auth-card">
+
+            <div class="auth-icon">
+                📝
+            </div>
+
+            <h1>Create Account</h1>
+
+            <p class="auth-subtitle">
+                Create your account and start managing your tasks.
+            </p>
+
+
+            {% if messages %}
+
+                {% for message in messages %}
+
+                    <div class="auth-message">
+                        {{ message }}
+                    </div>
+
+                {% endfor %}
+
+            {% endif %}
+
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+
+                <div class="auth-group">
+
+                    <label>
+                        👤 Username
+                    </label>
+
+                    <input
+                        type="text"
+                        name="username"
+                        placeholder="Enter username"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="auth-group">
+
+                    <label>
+                        📧 Email
+                    </label>
+
+                    <input
+                        type="email"
+                        name="email"
+                        placeholder="Enter email"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="auth-group">
+
+                    <label>
+                        🔒 Password
+                    </label>
+
+                    <input
+                        type="password"
+                        name="password"
+                        placeholder="Enter password"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="auth-group">
+
+                    <label>
+                        🔐 Confirm Password
+                    </label>
+
+                    <input
+                        type="password"
+                        name="confirm_password"
+                        placeholder="Confirm password"
+                        required
+                    >
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="auth-btn"
+                >
+                    Create Account
+                </button>
+
+            </form>
+
+
+            <p class="auth-footer">
+
+                Already have an account?
+
+                <a href="{% url 'login' %}">
+                    Login
+                </a>
+
+            </p>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
